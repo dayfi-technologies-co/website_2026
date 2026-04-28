@@ -34,11 +34,11 @@ const OpenRailsSection: React.FC = () => {
       <div className="editorial-container px-6">
         {/* Header */}
         <div className="mx-auto max-w-4xl text-center mb-4">
-          <p className="font-body text-[14px] uppercase tracking-widest text-zap-ink font-semibold opacity-100 text-green-800">
+          <p className="font-body text-[14px] uppercase tracking-widest text-green-600 font-semibold opacity-100 text-green-600">
             Built different
           </p>
           <h2 className="font-display font-semibold pt-4 mt-8 mx-auto w-full max-w-[600px] text-[clamp(1.75rem,9vw,3rem)] font-normal leading-[1.1] tracking-tight text-zap-ink md:mt-0">
-            Everything works <span className="italic text-green-800">the way you do</span>
+            Everything works <span className="italic text-green-600">the way you do</span>
           </h2>
           <p className="font-body pt-0 mt-0 mx-auto w-full max-w-[600px] text-[14px] leading-snug text-zap-ink leading-[1] md:mt-4 md:text-[20px]">
             DayFi understands Nigerian money — OPay transfers, Kuda wallets, naira volatility. No manual cleanup, no guesswork.
@@ -57,7 +57,7 @@ const OpenRailsSection: React.FC = () => {
               <div className="w-full md:w-1/2 space-y-6">
                 <h2 className="font-display text-[clamp(1.25rem,5vw,2rem)] leading-[1.1] text-zinc-900">
                   {feature.tag}
-                  {/* {feature.title.includes(',') && <span className="italic font-serif text-green-700">, {feature.title.split(',')[1]}</span>} */}
+                  {/* {feature.title.includes(',') && <span className="italic font-serif text-green-600">, {feature.title.split(',')[1]}</span>} */}
                 </h2>
                 <p className="font-body text-[18px] text-zinc-600 max-w-md leading-relaxed">
                   {feature.description}

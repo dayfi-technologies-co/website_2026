@@ -15,23 +15,23 @@ const Header: React.FC = () => {
 
   return (
     <header className="header-chrome sticky top-0 z-50 min-h-14 bg-white">
-      <div className="editorial-container flex h-full min-h-14 w-full items-center justify-between gap-3 py-2">
+     <div className="editorial-container relative flex h-full min-h-14 w-full items-center justify-between gap-3 py-2">
         
         {/* Logo — left */}
         <LogoTiles variant="wordmark" />
 
         {/* Nav links — center (desktop only) */}
-        <nav className="hidden md:flex items-center gap-6">
-          {NAV_LINKS.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="font-body text-[15px] text-zap-ink opacity-60 hover:opacity-100 transition-opacity"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
+         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6">
+    {NAV_LINKS.map((l) => (
+      <a
+        key={l.label}
+        href={l.href}
+        className="font-body text-[15px] text-zap-ink opacity-60 hover:opacity-100 transition-opacity"
+      >
+        {l.label}
+      </a>
+    ))}
+  </nav>
 
         {/* CTA buttons — right */}
         <div className="hidden md:flex items-center gap-3">

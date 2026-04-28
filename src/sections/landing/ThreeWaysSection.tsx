@@ -30,11 +30,11 @@ const ThreeWaysSection: React.FC = () => {
       <div className="editorial-container px-6">
         {/* Header */}
         <div className="mx-auto max-w-4xl text-center mb-16">
-          <p className="font-body text-[14px] uppercase tracking-widest text-zap-ink font-semibold opacity-100 text-green-800">
+          <p className="font-body text-[14px] uppercase tracking-widest text-green-600 font-semibold opacity-100 text-green-600">
             Solutions
           </p>
           <h2 className="font-display font-semibold pt-4 mt-8 mx-auto w-full max-w-[600px] text-[clamp(1.75rem,9vw,3rem)] font-normal leading-[1.1] tracking-tight text-zap-ink md:mt-0">
-            From your first sale <span className="italic">to your thousandth</span>
+            From your first sale <span className="italic text-green-600">to your thousandth</span>
           </h2>
           <p className="font-body pt-0 mt-0 mx-auto w-full max-w-[600px] text-[14px] leading-snug text-zap-ink leading-[1] md:mt-4 md:text-[20px]">
             DayFi grows with you — whether you're a solo founder or building a team.

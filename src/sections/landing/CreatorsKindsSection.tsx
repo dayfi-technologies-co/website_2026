@@ -35,11 +35,11 @@ const CreatorsKindsSection: React.FC = () => {
       <div className="editorial-container">
         {/* <ScrollReveal> */}
         <div className="mx-auto max-w-4xl text-center">
-          <p className="font-body text-[14px] uppercase tracking-widest text-zap-ink font-semibold opacity-100 text-green-800">
+          <p className="font-body text-[14px] uppercase tracking-widest text-green-600 font-semibold opacity-100 text-green-600">
             Products
           </p>
           <h2 className="font-display font-semibold pt-4 mt-8 mx-auto w-full max-w-[600px] text-[clamp(1.75rem,9vw,3rem)] font-normal leading-[1.1] tracking-tight text-zap-ink md:mt-0">
-            One platform,{" "}<span className="italic">more control</span>{" "}and complete visibility
+            One platform,{" "}<span className="italic text-green-600">more control</span>{" "}and complete visibility
           </h2>
           {/* <p className="font-body pt-0 mt-0 mx-auto w-full max-w-[600px] text-[20px] leading-snug text-zap-ink leading-[1] md:mt-4 md:text-[28px]">
             One platform, more control and complete visibility

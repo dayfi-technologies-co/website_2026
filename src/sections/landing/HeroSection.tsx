@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
       id="hero"
       className="editorial-section bg-white overflow-hidden px-0 py-16"
     >
-      <div className="editorial-container mx-auto w-full max-w-[1200px] px-4">
+      <div className="editorial-container mx-auto w-full max-w-[900px] px-4">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-12">
 
           {/* Text + CTA */}
@@ -60,7 +60,7 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.45, delay: stagger * 2 }}
               className="font-display font-bold w-full text-[clamp(3.8rem,7vw,4.5rem)] leading-[.95] tracking-tight text-zap-faint"
             >
-              Built for Nigerian businesses that move fast.
+              Built for <span className="italic">Nigerian businesses</span> that move fast.
             </motion.h1>
 
             <motion.p
@@ -96,13 +96,13 @@ const HeroSection: React.FC = () => {
 
 
           {/* Hero image */}
-          <motion.img
+          {/* <motion.img
             {...fadeUp}
             transition={{ duration: 0.55, delay: stagger * 5 }}
             src="/img/hero.webp"
             alt="Hero illustration"
             className="w-full md:w-[46%] shrink-0 rounded-2xl"
-          />
+          /> */}
 
         </div>
       </div>

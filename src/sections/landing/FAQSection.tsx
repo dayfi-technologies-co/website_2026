@@ -72,7 +72,7 @@ const FAQSection: React.FC = () => {
       <div className="editorial-container max-w-3xl">
 
         <div className="text-center mb-12">
-          <p className="font-body text-[14px] uppercase tracking-widest text-green-800 font-semibold mb-4">
+          <p className="font-body text-[14px] uppercase tracking-widest text-green-600 font-semibold mb-4">
             FAQ
           </p>
           <h2 className="font-display text-[clamp(1.75rem,5vw,2.5rem)] font-bold leading-tight tracking-tight text-zinc-900">

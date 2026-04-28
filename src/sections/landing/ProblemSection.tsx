@@ -41,11 +41,11 @@ const ProblemSection: React.FC = () => {
       <div className="editorial-container px-6">
         {/* Header */}
         <div className="mx-auto max-w-4xl text-center mb-16">
-          <p className="font-body text-[14px] uppercase tracking-widest text-zap-ink font-semibold opacity-100 text-green-800">
+          <p className="font-body text-[14px] uppercase tracking-widest text-green-600 font-semibold opacity-100 text-green-600">
             DayFi in 30 days
           </p>
           <h2 className="font-display font-semibold pt-4 mt-8 mx-auto w-full max-w-[600px] text-[clamp(1.75rem,9vw,3rem)] font-normal leading-[1.1] tracking-tight text-zap-ink md:mt-0">
-            From sign up to <span className="italic text-green-800">fully running</span>
+            From sign up to <span className="italic text-green-600">fully running</span>
           </h2>
         </div>
 

@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const input = path.join(root, "public/vid/IMG_2662.MOV");
 const output = path.join(root, "public/vid/splash_vid.mp4");
+const poster = path.join(root, "public/vid/splash_poster.jpg");
 
 const ffmpegBin = process.env.FFMPEG_PATH ?? "ffmpeg";
 
@@ -15,7 +16,9 @@ if (!fs.existsSync(input)) {
   process.exit(1);
 }
 
-console.log("Transcoding HEVC MOV → H.264 MP4 (Chrome needs this)…");
+console.log(
+  "Transcoding → H.264 MP4 (max width 720, moov first) + poster frame…",
+);
 try {
   execFileSync(
     ffmpegBin,
@@ -24,6 +27,8 @@ try {
       "-i",
       input,
       "-an",
+      "-vf",
+      "scale=min(720\\,iw):-2:flags=lanczos",
       "-c:v",
       "libx264",
       "-profile:v",
@@ -31,12 +36,31 @@ try {
       "-pix_fmt",
       "yuv420p",
       "-crf",
-      "23",
+      "28",
       "-preset",
-      "fast",
+      "medium",
       "-movflags",
       "+faststart",
       output,
+    ],
+    { stdio: "inherit" },
+  );
+
+  execFileSync(
+    ffmpegBin,
+    [
+      "-y",
+      "-i",
+      output,
+      "-vf",
+      "select=eq(n\\,0)",
+      "-q:v",
+      "3",
+      "-frames:v",
+      "1",
+      "-update",
+      "1",
+      poster,
     ],
     { stdio: "inherit" },
   );
@@ -48,3 +72,4 @@ try {
 }
 
 console.log("Wrote", output);
+console.log("Wrote", poster);

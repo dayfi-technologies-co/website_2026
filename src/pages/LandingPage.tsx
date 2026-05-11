@@ -6,6 +6,8 @@ import appStoreBadge from "@/assets/pngs/coming_soon_to_the_app_store.png";
 import googlePlayBadge from "@/assets/pngs/coming_soon_on_google_play.png";
 
 const SPLASH_VIDEO_SRC = "/vid/splash_vid.mp4";
+/** First frame; run `npm run video:splash` to generate alongside the mp4. */
+const SPLASH_POSTER_SRC = "/vid/splash_poster.jpg";
 
 const socialLinks = {
   instagram: "https://www.instagram.com/",
@@ -206,14 +208,14 @@ const StatPill: React.FC<{ label: string; value: string }> = ({
   value,
 }) => (
   <div
-    className="flex items-center gap-2 rounded-full px-3 py-1.5"
-    style={{
-      background: "rgba(255,255,255,0.06)",
-      border: "1px solid rgba(255,255,255,0.1)",
-    }}
+    className="flex items-center gap-2 rounded-full px-2 py-1"
+    // style={{
+    //   background: "rgba(255,255,255,0.06)",
+    //   border: "1px solid rgba(255,255,255,0.1)",
+    // }}
   >
-    <span className="text-[13px] font-semibold text-white/90">{value}</span>
-    <span className="text-[11px] text-white/40">{label}</span>
+    <span className="text-[12px] font-semibold text-white/90">{value}</span>
+    <span className="text-[10px] text-white/40">{label}</span>
   </div>
 );
 
@@ -228,7 +230,7 @@ const SocialIcon: React.FC<{
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="rounded-lg p-2 text-white/40 transition-all duration-150 hover:bg-white/6 hover:text-white/80"
+    className="rounded-lg p-2 text-white/40 transition-all duration-150 hover:bg-white/6 hover:text-white/95"
   >
     {children}
   </a>
@@ -271,10 +273,11 @@ const LandingPage: React.FC = () => {
     };
   }, []);
 
-  /* autoplay video */
+  /* autoplay video + hint high fetch priority (not in older React DOM typings) */
   useEffect(() => {
     const el = splashVideoRef.current;
     if (!el) return;
+    el.setAttribute("fetchpriority", "high");
     const tryPlay = () => {
       el.muted = true;
       void el.play().catch(() => {});
@@ -314,7 +317,7 @@ const LandingPage: React.FC = () => {
           alt="DayFi"
           className="h-8 w-8 object-contain"
         />
-        <nav className="flex items-center gap-5">
+        <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1 sm:gap-x-5">
           <Link
             to="/terms"
             className="text-[13px] text-white/40 transition-colors hover:text-white/70"
@@ -326,6 +329,24 @@ const LandingPage: React.FC = () => {
             className="text-[13px] text-white/40 transition-colors hover:text-white/70"
           >
             Privacy
+          </Link>
+          <Link
+            to="/about"
+            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
+          >
+            About
+          </Link>
+          <Link
+            to="/security"
+            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
+          >
+            Security
+          </Link>
+          <Link
+            to="/government"
+            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
+          >
+            Government
           </Link>
         </nav>
       </header>
@@ -343,7 +364,7 @@ const LandingPage: React.FC = () => {
               alt="DayFi"
               className="mb-0 h-44 w-44 self-start object-contain object-left"
             />
-            <div className="font-body mt-2 w-full text-[18px] leading-snug text-white/95 md:text-[22px]">
+            <div className="font-body mt-8 w-full text-[18px] leading-snug text-white/95 md:text-[22px]">
               <p>
                 A POS ready for what
                 <br />
@@ -352,13 +373,20 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Stats */}
-            {/* <div className="mb-6 flex flex-wrap gap-2">
+            {/* <div className="mb-6 mt-6 flex flex-wrap gap-2">
               <StatPill value="0%" label="setup fee" />
-              <StatPill value="NGN" label="local currency" />
-              <StatPill value="USDC" label="stable savings" />
-            </div>
+              <StatPill value="NGN" label="local" />
+              <StatPill value="USDC" label="stable" />
+              <StatPill value="NFC" label="tap to pay" />
+              <StatPill value="QR" label="scan to pay" />
+              <StatPill value="Bank" label="bank integration" />
+              <StatPill value="Inventory" label="inventory management" />
+              <StatPill value="Analytics" label="analytics" />
+              <StatPill value="Reports" label="reports" />
+              <StatPill value="Settings" label="settings" />
+            </div> */}
 
-            <WaitlistForm size="lg" /> */}
+            {/* <WaitlistForm size="lg"  /> */}
 
             <StoreBadges variant="hero-xl" />
           </div>
@@ -393,7 +421,8 @@ const LandingPage: React.FC = () => {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
+                poster={SPLASH_POSTER_SRC}
                 className="absolute inset-0 z-0 h-full w-full object-cover"
               >
                 <source src={SPLASH_VIDEO_SRC} type="video/mp4" />
@@ -412,16 +441,31 @@ const LandingPage: React.FC = () => {
                   </h1>
                 </div>
 
-                <div className="shrink-0 space-y-3">
+                <div className="shrink-0 space-y-2.5">
                   <button
                     type="button"
-                    className="h-[52px] w-full rounded-full bg-white text-[12px] font-semibold tracking-[-0.01em] text-black transition hover:bg-white/90 sm:text-[12px]"
+                    className="group relative h-[50px] w-full overflow-hidden rounded-full font-semibold tracking-[-0.01em] text-black transition-all duration-200 active:scale-[0.98]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #9ae832 0%, #7DCF11 60%, #5ca80a 100%)",
+                      fontSize: "clamp(11px, 3vw, 13px)",
+                      // boxShadow: "0 4px 20px rgba(125,207,17,0.35)",
+                    }}
                   >
-                    Create account
+                    <span className="relative z-10">Create account</span>
+                    <span
+                      className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                      style={{ background: "rgba(255,255,255,0.12)" }}
+                    />
                   </button>
                   <button
                     type="button"
-                    className="h-[52px] w-full rounded-full bg-black/85 text-[12px] font-medium tracking-[-0.01em] text-white transition hover:bg-black/75 sm:text-[12px]"
+                    className="h-[50px] w-full rounded-full font-medium tracking-[-0.01em] text-white/85 transition-all duration-200 hover:bg-white/10 active:scale-[0.98]"
+                    style={{
+                      background: "rgba(0,0,0,0.55)",
+                      // border: "1px solid rgba(255,255,255,0.12)",
+                      fontSize: "clamp(11px, 3vw, 13px)",
+                    }}
                   >
                     Sign in
                   </button>
@@ -440,11 +484,13 @@ const LandingPage: React.FC = () => {
               className="flex flex-col items-end gap-5"
               aria-label="Legal and policies"
             >
-              {(["Terms", "Privacy", "Security"] as const).map((label) => (
+              {(
+                ["Terms", "Privacy", "About", "Security", "Government"] as const
+              ).map((label) => (
                 <Link
                   key={label}
                   to={`/${label.toLowerCase()}`}
-                  className="text-[20px] font-light leading-snug text-white/35 transition-colors duration-200 hover:text-white/75"
+                  className="text-[20px] font-light leading-snug text-white/35 transition-colors duration-200 hover:text-white/95"
                 >
                   {label}
                 </Link>
@@ -485,11 +531,22 @@ const LandingPage: React.FC = () => {
               Privacy
             </Link>
             <Dot />
+            <Link to="/about" className="transition-colors hover:text-white/55">
+              About
+            </Link>
+            <Dot />
             <Link
               to="/security"
               className="transition-colors hover:text-white/55"
             >
               Security
+            </Link>
+            <Dot />
+            <Link
+              to="/government"
+              className="transition-colors hover:text-white/55"
+            >
+              Government
             </Link>
           </div>
           <div className="flex items-center gap-0.5">

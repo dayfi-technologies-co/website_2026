@@ -1,7 +1,11 @@
 import React from "react";
 
-const DESIGN_W = 390;
-const DESIGN_H = 844;
+/** Logical design size (points); keep layout math in sync with this mockup */
+export const IPHONE_17_PRO_DESIGN_W = 390;
+export const IPHONE_17_PRO_DESIGN_H = 844;
+
+const DESIGN_W = IPHONE_17_PRO_DESIGN_W;
+const DESIGN_H = IPHONE_17_PRO_DESIGN_H;
 
 type Iphone17ProProps = {
   src?: string;

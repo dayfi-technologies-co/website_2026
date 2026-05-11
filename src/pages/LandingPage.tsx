@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Instagram, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Iphone17Pro } from "@/components/eldoraui/iphone-17-pro";
+import {
+  Iphone17Pro,
+  IPHONE_17_PRO_DESIGN_H,
+  IPHONE_17_PRO_DESIGN_W,
+} from "@/components/eldoraui/iphone-17-pro";
 import appStoreBadge from "@/assets/pngs/coming_soon_to_the_app_store.png";
 import googlePlayBadge from "@/assets/pngs/coming_soon_on_google_play.png";
 
@@ -13,10 +17,11 @@ const socialLinks = {
   twitter: "https://x.com/usedayfi",
 } as const;
 
-// Target phone dimensions at full desktop size
-const PHONE_W_BASE = 370 * 0.95;
-const PHONE_H_BASE = 780 * 0.95;
-const PHONE_ASPECT = PHONE_H_BASE / PHONE_W_BASE;
+// Target phone at full desktop: uniform scale of Pro logical size (390×844)
+const PHONE_DISPLAY_SCALE = 0.875;
+const PHONE_W_BASE = IPHONE_17_PRO_DESIGN_W * PHONE_DISPLAY_SCALE;
+const PHONE_H_BASE = IPHONE_17_PRO_DESIGN_H * PHONE_DISPLAY_SCALE;
+const PHONE_ASPECT = IPHONE_17_PRO_DESIGN_H / IPHONE_17_PRO_DESIGN_W;
 
 // Desktop threshold — matches xl: (1280px). Keeping it in sync with Tailwind breakpoint.
 const DESKTOP_BP = 1280;
@@ -51,47 +56,48 @@ function getPhoneDimensions(): { w: number; h: number } {
   return { w: Math.round(w), h: Math.round(h) };
 }
 
-/* ─── Animated background orbs ─── */
+/* ─── Background orbs (slow, small drift — easy on the eyes) ─── */
 const BackgroundOrbs: React.FC = () => (
   <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
     <div
-      className="absolute rounded-full"
+      className="landing-bg-orb absolute rounded-full"
       style={{
         width: "72vw", height: "72vw", top: "-18vw", left: "-20vw",
         background: "radial-gradient(circle, rgba(125,207,17,0.13) 0%, rgba(27,77,62,0.18) 45%, transparent 70%)",
-        animation: "orbDrift1 18s ease-in-out infinite",
+        animation: "landingOrbDrift1 36s ease-in-out infinite",
       }}
     />
     <div
-      className="absolute rounded-full"
+      className="landing-bg-orb absolute rounded-full"
       style={{
         width: "50vw", height: "50vw", bottom: "0", right: "-12vw",
         background: "radial-gradient(circle, rgba(125,207,17,0.10) 0%, rgba(14,31,25,0.05) 60%, transparent 80%)",
-        animation: "orbDrift2 22s ease-in-out infinite",
+        animation: "landingOrbDrift2 44s ease-in-out infinite",
       }}
     />
     <div
-      className="absolute rounded-full"
+      className="landing-bg-orb absolute rounded-full"
       style={{
         width: "38vw", height: "38vw", top: "40%", left: "35%",
         background: "radial-gradient(circle, rgba(27,77,62,0.22) 0%, transparent 70%)",
-        animation: "orbDrift3 26s ease-in-out infinite",
+        animation: "landingOrbDrift3 52s ease-in-out infinite",
       }}
     />
     <style>{`
-      @keyframes orbDrift1 {
+      @keyframes landingOrbDrift1 {
         0%, 100% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(3vw, 4vw) scale(1.04); }
-        66% { transform: translate(-2vw, 2vw) scale(0.97); }
+        50% { transform: translate(1.2vw, 1.4vw) scale(1.012); }
       }
-      @keyframes orbDrift2 {
+      @keyframes landingOrbDrift2 {
         0%, 100% { transform: translate(0, 0) scale(1); }
-        40% { transform: translate(-4vw, -3vw) scale(1.06); }
-        70% { transform: translate(2vw, 4vw) scale(0.96); }
+        50% { transform: translate(-1vw, -1.1vw) scale(1.015); }
       }
-      @keyframes orbDrift3 {
+      @keyframes landingOrbDrift3 {
         0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(-6vw, -4vw); }
+        50% { transform: translate(-1.4vw, -0.9vw); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .landing-bg-orb { animation: none !important; }
       }
     `}</style>
   </div>
@@ -169,8 +175,13 @@ const LandingPage: React.FC = () => {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 60);
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) {
+      setMounted(true);
+      return;
+    }
+    const t = window.setTimeout(() => setMounted(true), 48);
     return () => clearTimeout(t);
   }, []);
 
@@ -196,10 +207,11 @@ const LandingPage: React.FC = () => {
     return () => el.removeEventListener("loadeddata", tryPlay);
   }, []);
 
-  const fadeUp = (delay: number) => ({
+  const fadeEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+  const fadeUp = (delayMs: number) => ({
     opacity: mounted ? 1 : 0,
-    transform: mounted ? "translateY(0)" : "translateY(16px)",
-    transition: `opacity 0.65s ease ${delay}ms, transform 0.65s ease ${delay}ms`,
+    transform: mounted ? "translateY(0)" : "translateY(8px)",
+    transition: `opacity 0.48s ${fadeEase} ${delayMs}ms, transform 0.48s ${fadeEase} ${delayMs}ms`,
   });
 
   const legalNavItems = [
@@ -210,12 +222,9 @@ const LandingPage: React.FC = () => {
     { to: "/government", label: "Government" },
   ] as const;
 
-  // Phone node — shared between layouts
+  // Phone node — shared between layouts (fade applied by parent where needed)
   const phoneNode = (
-    <div
-      className="flex w-full shrink-0 justify-center xl:w-auto xl:shrink-0"
-      style={fadeUp(120)}
-    >
+    <div className="flex w-full shrink-0 justify-center xl:w-auto xl:shrink-0">
       <Iphone17Pro
         width={phoneDims.w}
         height={phoneDims.h}
@@ -322,7 +331,7 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Phone in the middle */}
-            {phoneNode}
+            <div style={fadeUp(56)}>{phoneNode}</div>
 
             <StoreBadges variant="mobile-row" />
           </div>
@@ -343,7 +352,7 @@ const LandingPage: React.FC = () => {
           </div>
 
           {/* Phone on mobile (outside the tablet block above) */}
-          <div className="flex w-full justify-center md:hidden" style={fadeUp(120)}>
+          <div className="flex w-full justify-center md:hidden" style={fadeUp(72)}>
             <Iphone17Pro
               width={phoneDims.w}
               height={phoneDims.h}
@@ -389,14 +398,14 @@ const LandingPage: React.FC = () => {
           </div>
 
           {/* Desktop phone — xl+ only */}
-          <div className="hidden xl:block" style={fadeUp(120)}>
+          <div className="hidden xl:block" style={fadeUp(72)}>
             {phoneNode}
           </div>
 
           {/* ── RIGHT PANEL: desktop (xl+) only ── */}
           <div
             className="hidden w-[280px] shrink-0 flex-col items-end gap-8 xl:flex"
-            style={fadeUp(60)}
+            style={fadeUp(36)}
           >
             <nav className="flex flex-col items-end gap-5" aria-label="Legal and policies">
               {legalNavItems.map(({ to, label }) => (

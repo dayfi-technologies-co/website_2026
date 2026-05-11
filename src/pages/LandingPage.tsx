@@ -73,7 +73,7 @@ const LandingPage: React.FC = () => {
     <div
       id="main-content"
       tabIndex={-1}
-      className="relative flex min-h-screen flex-col overflow-y-auto bg-zap-bg text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
+      className="relative flex min-h-screen flex-col overflow-y-auto bg-gradient-to-br from-zap-bg-alt via-zap-bg to-zap-bg-tile text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
     >
       <section className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 sm:px-6 md:px-10 xl:px-20 xl:py-6">
         <div className="flex w-full max-w-[1380px] flex-col items-center gap-6 xl:flex-row xl:items-center xl:justify-between xl:gap-6">
@@ -148,7 +148,7 @@ const LandingPage: React.FC = () => {
           </Iphone17Pro>
 
           <div className="hidden w-[320px] flex-col items-center justify-center gap-4 xl:flex">
-            <div className="flex w-full flex-col items-center justify-center gap-3 pt-4">
+            <div className="flex w-full flex-row items-center justify-center gap-3 pt-4">
               <img
                 src={appStoreBadge}
                 alt="Coming soon to the App Store"

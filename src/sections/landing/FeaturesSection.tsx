@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Zap, Globe, Trophy, Shield } from 'lucide-react';
+import { Sparkles, Zap, Trophy, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const features = [
@@ -14,7 +14,15 @@ const features = [
     description: 'Only 2% withdrawal fee. Keep 98% of what you earn.',
   },
   {
-    icon: <Globe size={40} />,
+    icon: (
+      <img
+        src="/img/logo.png"
+        alt=""
+        width={40}
+        height={40}
+        className="object-contain"
+      />
+    ),
     title: 'Global Access',
     description: 'Borderless payments. Anyone, anywhere, anytime.',
   },

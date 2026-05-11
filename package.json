@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "video:splash": "node scripts/transcode-splash.mjs",
+    "video:poster": "node scripts/extract-splash-poster.mjs",
     "prepare": "husky || true"
   },
   "lint-staged": {

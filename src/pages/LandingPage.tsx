@@ -429,10 +429,7 @@ const LandingPage: React.FC = () => {
               </video>
               <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/10 via-black/45 to-black/80" />
 
-              <div
-                className="relative z-10 flex h-full flex-col justify-between px-5 pb-6 pt-8 text-white sm:px-7 sm:pb-7 sm:pt-9"
-                style={{ fontFamily: "'Karla', sans-serif" }}
-              >
+              <div className="relative z-10 flex h-full flex-col justify-between px-5 pb-6 pt-8 font-body text-white sm:px-7 sm:pb-7 sm:pt-9">
                 <div className="shrink-0" aria-hidden />
 
                 <div className="flex flex-1 flex-col justify-center pb-2">
@@ -444,7 +441,7 @@ const LandingPage: React.FC = () => {
                 <div className="shrink-0 space-y-2.5">
                   <button
                     type="button"
-                    className="group relative h-[50px] w-full overflow-hidden rounded-full font-semibold tracking-[-0.01em] text-black transition-all duration-200 active:scale-[0.98]"
+                    className="group relative h-[52px] w-full overflow-hidden rounded-full font-semibold tracking-[-0.01em] text-black transition-all duration-200 active:scale-[0.98]"
                     style={{
                       background:
                         "linear-gradient(135deg, #9ae832 0%, #7DCF11 60%, #5ca80a 100%)",
@@ -460,12 +457,7 @@ const LandingPage: React.FC = () => {
                   </button>
                   <button
                     type="button"
-                    className="h-[50px] w-full rounded-full font-medium tracking-[-0.01em] text-white/85 transition-all duration-200 hover:bg-white/10 active:scale-[0.98]"
-                    style={{
-                      background: "rgba(0,0,0,0.55)",
-                      // border: "1px solid rgba(255,255,255,0.12)",
-                      fontSize: "clamp(11px, 3vw, 13px)",
-                    }}
+                    className="h-[52px] w-full rounded-full bg-black/85 text-[12px] font-medium tracking-[-0.01em] text-white transition hover:bg-black/75 sm:text-[12px]"
                   >
                     Sign in
                   </button>
@@ -490,7 +482,7 @@ const LandingPage: React.FC = () => {
                 <Link
                   key={label}
                   to={`/${label.toLowerCase()}`}
-                  className="text-[20px] font-light leading-snug text-white/35 transition-colors duration-200 hover:text-white/95"
+                  className="text-[20px] font-medium leading-snug text-white/35 transition-colors duration-200 hover:text-white/95"
                 >
                   {label}
                 </Link>

@@ -19,7 +19,7 @@ const CUSTOMER_STORIES = [
     position: "Founder",
     company: "Lagos Drip Co.",
     feedback: "\"I send invoices, track my store inventory, and collect USDC payments — all from one app. DayFi replaced three tools I was using.\"",
-    video: "/vid/IMG_2662.MOV",
+    video: "/vid/splash_vid.mp4",
     poster: "/img/tunde-thumb.jpg"
   },
   {

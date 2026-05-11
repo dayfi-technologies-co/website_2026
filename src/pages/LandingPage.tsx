@@ -73,7 +73,7 @@ const LandingPage: React.FC = () => {
     <div
       id="main-content"
       tabIndex={-1}
-      className="relative flex min-h-screen flex-col overflow-y-auto bg-gradient-to-br from-zap-bg-alt via-zap-bg to-zap-bg-tile text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
+      className="relative flex min-h-screen flex-col overflow-y-auto bg-gradient-to-br from-[#7DCF11]/20 via-[#1B4D3E] to-[#0e1f19] text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
     >
       <section className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 sm:px-6 md:px-10 xl:px-20 xl:py-6">
         <div className="flex w-full max-w-[1380px] flex-col items-center gap-6 xl:flex-row xl:items-center xl:justify-between xl:gap-6">
@@ -84,13 +84,26 @@ const LandingPage: React.FC = () => {
               className="mx-auto h-44 w-44 object-contain"
             />
 
-            <p className="font-body mb-4 w-full text-center text-[16px] leading-snug text-zap-ink md:text-[20px]">
-              Every day is payday
-            </p>
 
-            <p className="font-body mt-4 w-full text-center text-[18px] leading-snug text-zap-ink-muted md:text-[22px]">
+
+            <p className="font-body mt-2 w-full text-center text-[18px] leading-snug text-white/95 md:text-[22px]">
               Sell in-person, online, or<br />on the go.
             </p>
+
+
+            <div className="flex w-full flex-row items-center justify-center gap-2 pt-6">
+              <img
+                src={appStoreBadge}
+                alt="Coming soon to the App Store"
+                className="w-full max-w-[124px]"
+              />
+              <img
+                src={googlePlayBadge}
+                alt="Coming soon on Google Play"
+                className="w-full max-w-[124px]"
+              />
+            </div>
+
 
           </div>
 
@@ -103,9 +116,9 @@ const LandingPage: React.FC = () => {
             <p className="font-body w-full max-w-md text-center text-[15px] leading-snug text-zap-ink sm:text-[17px] md:text-[18px]">
               Every day is payday
             </p>
-            <p className="font-body w-full max-w-md text-center text-[16px] leading-snug text-zap-ink-muted sm:text-[17px] md:text-[19px]">
+            {/* <p className="font-body w-full max-w-md text-center text-[16px] leading-snug text-zap-ink-muted sm:text-[17px] md:text-[19px]">
               Sell in-person, online, or<br />on the go.
-            </p>
+            </p> */}
           </div>
 
           <Iphone17Pro
@@ -148,20 +161,12 @@ const LandingPage: React.FC = () => {
           </Iphone17Pro>
 
           <div className="hidden w-[320px] flex-col items-center justify-center gap-4 xl:flex">
-            <div className="flex w-full flex-row items-center justify-center gap-3 pt-4">
-              <img
-                src={appStoreBadge}
-                alt="Coming soon to the App Store"
-                className="w-full max-w-[144px]"
-              />
-              <img
-                src={googlePlayBadge}
-                alt="Coming soon on Google Play"
-                className="w-full max-w-[144px]"
-              />
-            </div>
-          </div>
 
+
+            <p className="font-body mb-4 w-full text-center text-[16px] leading-snug text-zap-ink md:text-[20px]">
+              Every day is payday
+            </p>
+          </div>
           <div className="flex w-full flex-col items-center pb-4 pt-2 xl:hidden">
             {storeBadgeRow}
           </div>

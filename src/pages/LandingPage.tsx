@@ -185,10 +185,10 @@ const StoreBadges: React.FC<{
       ? "w-full max-w-[124px]"
       : variant === "hero-sm"
         ? "w-full max-w-[114px]"
-        : "w-full max-w-[200px]";
+        : "w-full max-w-[132px] sm:max-w-[148px]";
   const layoutClass =
     variant === "hero-mobile-stack"
-      ? "mx-auto flex w-full max-w-[220px] flex-col items-center gap-3 pt-2 sm:max-w-[240px]"
+      ? "mx-auto flex w-full max-w-[148px] flex-col items-center gap-2 pt-2 sm:max-w-[168px]"
       : variant === "hero-xl"
         ? "flex w-full flex-row items-center justify-start gap-2 pt-3 sm:pt-6"
         : "flex w-full flex-row items-center justify-center gap-2 pt-3 sm:pt-6";
@@ -368,12 +368,9 @@ const LandingPage: React.FC = () => {
                 alt="DayFi"
                 className="h-24 w-24 object-contain sm:h-28 sm:w-28"
               />
-              <span className="font-body text-[1.65rem] font-semibold tracking-[-0.04em] text-white/95 sm:text-[1.85rem]">
-                DayFi
-              </span>
             </div>
 
-            <div className="font-body w-full max-w-sm text-[17px] leading-snug text-white/80 sm:text-[19px]">
+            <div className="font-body w-full max-w-sm text-[14px] leading-snug text-white/80 sm:text-[19px]">
               <p>
                 A POS ready for what
                 <br />
@@ -412,7 +409,7 @@ const LandingPage: React.FC = () => {
                 <div className="shrink-0" aria-hidden />
 
                 <div className="flex flex-1 flex-col items-center justify-center pb-2 lg:items-start">
-                  <h1 className="max-w-[320px] text-center text-[clamp(1.65rem,7.5vw,3.65rem)] font-light leading-[1.05] tracking-[-0.038em] text-white/95 sm:text-[64px] lg:text-left lg:text-[66px]">
+                  <h1 className="max-w-[320px] text-center font-light leading-[1.05] tracking-[-0.038em] text-white/95 sm:text-[66px] lg:text-left lg:text-[66px]">
                     One point of sale, wherever you grow
                   </h1>
                 </div>

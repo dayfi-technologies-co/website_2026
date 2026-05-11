@@ -22,7 +22,8 @@ function getPhoneDimensions(): { w: number; h: number } {
   if (typeof window === "undefined") return { w: PHONE_W, h: PHONE_H };
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  if (vw >= 1280) return { w: PHONE_W, h: PHONE_H };
+  /* Match `lg:` desktop row (1024px) so laptop widths get the full hero layout */
+  if (vw >= 1024) return { w: PHONE_W, h: PHONE_H };
   const horizontalPad = vw < 640 ? 24 : vw < 1024 ? 48 : 64;
   let w = Math.min(PHONE_W, vw - horizontalPad);
   let h = w * PHONE_ASPECT;
@@ -176,18 +177,24 @@ const WaitlistForm: React.FC<{ size?: "sm" | "lg" }> = ({ size = "lg" }) => {
 };
 
 /* ─── Store badges ─── */
-const StoreBadges: React.FC<{ variant: "hero-xl" | "hero-sm" }> = ({
-  variant,
-}) => {
+const StoreBadges: React.FC<{
+  variant: "hero-xl" | "hero-sm" | "hero-mobile-stack";
+}> = ({ variant }) => {
   const imgClass =
-    variant === "hero-xl" ? "w-full max-w-[124px]" : "w-full max-w-[114px]";
-  const rowClass =
     variant === "hero-xl"
-      ? "flex w-full flex-row items-center justify-start gap-2 pt-3 sm:pt-6"
-      : "flex w-full flex-row items-center justify-center gap-2 pt-3 sm:pt-6";
+      ? "w-full max-w-[124px]"
+      : variant === "hero-sm"
+        ? "w-full max-w-[114px]"
+        : "w-full max-w-[200px]";
+  const layoutClass =
+    variant === "hero-mobile-stack"
+      ? "mx-auto flex w-full max-w-[220px] flex-col items-center gap-3 pt-2 sm:max-w-[240px]"
+      : variant === "hero-xl"
+        ? "flex w-full flex-row items-center justify-start gap-2 pt-3 sm:pt-6"
+        : "flex w-full flex-row items-center justify-center gap-2 pt-3 sm:pt-6";
 
   return (
-    <div className={rowClass}>
+    <div className={layoutClass}>
       <img
         src={appStoreBadge}
         alt="Coming soon to the App Store"
@@ -234,11 +241,6 @@ const SocialIcon: React.FC<{
   >
     {children}
   </a>
-);
-
-/* ─── Divider dot ─── */
-const Dot: React.FC = () => (
-  <span className="text-white/20 select-none">·</span>
 );
 
 /* ════════════════════════════════════════════════════
@@ -293,11 +295,19 @@ const LandingPage: React.FC = () => {
     transition: `opacity 0.65s ease ${delay}ms, transform 0.65s ease ${delay}ms`,
   });
 
+  const legalNavItems = [
+    { to: "/terms", label: "Terms" },
+    { to: "/privacy", label: "Privacy" },
+    { to: "/about", label: "About" },
+    { to: "/security", label: "Security" },
+    { to: "/government", label: "Government" },
+  ] as const;
+
   return (
     <div
       id="main-content"
       tabIndex={-1}
-      className="relative flex h-[100dvh] max-h-[100dvh] min-h-0 flex-col overflow-hidden outline-none"
+      className="relative flex min-h-[100dvh] flex-col overflow-y-auto outline-none lg:h-[100dvh] lg:max-h-[100dvh] lg:min-h-0 lg:overflow-hidden"
       style={{
         background:
           "linear-gradient(145deg, rgba(125,207,17,0.18) 0%, #132b20 28%, #0a1910 55%, #060f0b 100%)",
@@ -307,56 +317,12 @@ const LandingPage: React.FC = () => {
       <BackgroundOrbs />
       <NoiseOverlay />
 
-      {/* ── TOP NAV BAR (mobile) ── */}
-      <header
-        className="relative z-20 flex items-center justify-between px-5 py-3 sm:px-7 xl:hidden"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-      >
-        <img
-          src="/img/hero_logo.png"
-          alt="DayFi"
-          className="h-8 w-8 object-contain"
-        />
-        <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1 sm:gap-x-5">
-          <Link
-            to="/terms"
-            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
-          >
-            Terms
-          </Link>
-          <Link
-            to="/privacy"
-            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
-          >
-            Privacy
-          </Link>
-          <Link
-            to="/about"
-            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
-          >
-            About
-          </Link>
-          <Link
-            to="/security"
-            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
-          >
-            Security
-          </Link>
-          <Link
-            to="/government"
-            className="text-[13px] text-white/40 transition-colors hover:text-white/70"
-          >
-            Government
-          </Link>
-        </nav>
-      </header>
-
       {/* ── MAIN CONTENT ── */}
-      <section className="relative z-10 flex min-h-0 w-full flex-1 flex-col items-center justify-center overflow-hidden px-4 py-2 sm:px-6 md:px-10 xl:px-16">
-        <div className="flex min-h-0 w-full max-w-[1380px] flex-col items-center gap-2 xl:flex-row xl:items-center xl:justify-between xl:gap-8">
+      <section className="relative z-10 flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-x-hidden px-4 py-6 sm:px-6 md:px-10 lg:justify-center lg:overflow-hidden lg:px-16 lg:py-2">
+        <div className="flex w-full max-w-[1380px] flex-col items-center justify-center gap-8 lg:min-h-0 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           {/* ── LEFT PANEL (desktop only) ── */}
           <div
-            className="hidden w-[300px] shrink-0 flex-col items-start xl:flex"
+            className="hidden w-[300px] shrink-0 flex-col items-start lg:flex"
             style={fadeUp(0)}
           >
             <img
@@ -391,25 +357,38 @@ const LandingPage: React.FC = () => {
             <StoreBadges variant="hero-xl" />
           </div>
 
-          {/* ── MOBILE HEADER ── */}
-          <div className="flex w-full shrink-0 flex-col items-center gap-2 pt-0 sm:gap-3 sm:pt-1 xl:hidden">
-            <img
-              src="/img/hero_logo.png"
-              alt=""
-              className="mx-auto h-28 w-28 object-contain sm:h-36 sm:w-36"
-            />
-            <div className="font-body w-full max-w-md text-center text-[16px] leading-snug text-zap-ink-muted sm:text-[17px] md:text-[19px]">
+          {/* ── MOBILE: brand + badges (same as web left rail, column + centered) ── */}
+          <div
+            className="flex w-full max-w-md shrink-0 flex-col items-center gap-5 text-center lg:hidden"
+            style={fadeUp(0)}
+          >
+            <div className="flex flex-col items-center gap-2">
+              <img
+                src="/img/hero_logo.png"
+                alt="DayFi"
+                className="h-24 w-24 object-contain sm:h-28 sm:w-28"
+              />
+              <span className="font-body text-[1.65rem] font-semibold tracking-[-0.04em] text-white/95 sm:text-[1.85rem]">
+                DayFi
+              </span>
+            </div>
+
+            <div className="font-body w-full max-w-sm text-[17px] leading-snug text-white/80 sm:text-[19px]">
               <p>
                 A POS ready for what
                 <br />
                 you've got.
               </p>
             </div>
-            <StoreBadges variant="hero-sm" />
+
+            <StoreBadges variant="hero-mobile-stack" />
           </div>
 
-          {/* ── PHONE ── */}
-          <div style={fadeUp(120)}>
+          {/* ── PHONE (web + mobile): same video, gradient, in-screen headline + CTAs ── */}
+          <div
+            className="flex w-full shrink-0 justify-center pb-2 lg:w-auto lg:shrink-0 lg:pb-0"
+            style={fadeUp(120)}
+          >
             <Iphone17Pro
               width={phoneDims.w}
               height={phoneDims.h}
@@ -432,8 +411,8 @@ const LandingPage: React.FC = () => {
               <div className="relative z-10 flex h-full flex-col justify-between px-5 pb-6 pt-8 font-body text-white sm:px-7 sm:pb-7 sm:pt-9">
                 <div className="shrink-0" aria-hidden />
 
-                <div className="flex flex-1 flex-col justify-center pb-2">
-                  <h1 className="max-w-[320px] text-[clamp(2.35rem,9.2vw,3.65rem)] font-light leading-[1] tracking-[-0.038em] text-white/95 sm:text-[64px] xl:text-[66px]">
+                <div className="flex flex-1 flex-col items-center justify-center pb-2 lg:items-start">
+                  <h1 className="max-w-[320px] text-center text-[clamp(1.65rem,7.5vw,3.65rem)] font-light leading-[1.05] tracking-[-0.038em] text-white/95 sm:text-[64px] lg:text-left lg:text-[66px]">
                     One point of sale, wherever you grow
                   </h1>
                 </div>
@@ -441,23 +420,23 @@ const LandingPage: React.FC = () => {
                 <div className="shrink-0 space-y-2.5">
                   <button
                     type="button"
-                    className="group relative h-[52px] w-full overflow-hidden rounded-full font-semibold tracking-[-0.01em] text-black transition-all duration-200 active:scale-[0.98]"
+                    className="group relative flex h-[52px] w-full items-center justify-center overflow-hidden rounded-full font-semibold tracking-[-0.01em] text-black transition-all duration-200 active:scale-[0.98]"
                     style={{
                       background:
                         "linear-gradient(135deg, #9ae832 0%, #7DCF11 60%, #5ca80a 100%)",
                       fontSize: "clamp(11px, 3vw, 13px)",
-                      // boxShadow: "0 4px 20px rgba(125,207,17,0.35)",
                     }}
                   >
                     <span className="relative z-10">Create account</span>
                     <span
                       className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                       style={{ background: "rgba(255,255,255,0.12)" }}
+                      aria-hidden
                     />
                   </button>
                   <button
                     type="button"
-                    className="h-[52px] w-full rounded-full bg-black/85 text-[12px] font-medium tracking-[-0.01em] text-white transition hover:bg-black/75 sm:text-[12px]"
+                    className="flex h-[52px] w-full items-center justify-center rounded-full bg-black/85 text-[12px] font-medium tracking-[-0.01em] text-white transition hover:bg-black/75 sm:text-[12px]"
                   >
                     Sign in
                   </button>
@@ -466,9 +445,36 @@ const LandingPage: React.FC = () => {
             </Iphone17Pro>
           </div>
 
+          {/* ── MOBILE: legal + social (same as web right rail, column + centered) ── */}
+          <div className="flex w-full max-w-md shrink-0 flex-col items-center gap-5 pb-6 lg:hidden">
+            <nav
+              className="flex flex-col items-center gap-3.5 font-body"
+              aria-label="Legal and policies"
+            >
+              {legalNavItems.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="text-[15px] text-white/45 transition-colors hover:text-white/85"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center justify-center gap-0.5">
+              <SocialIcon href={socialLinks.instagram} label="Instagram">
+                <Instagram className="h-5 w-5" strokeWidth={1.6} aria-hidden />
+              </SocialIcon>
+              <SocialIcon href={socialLinks.twitter} label="Twitter / X">
+                <Twitter className="h-5 w-5" strokeWidth={1.6} aria-hidden />
+              </SocialIcon>
+            </div>
+          </div>
+
           {/* ── RIGHT PANEL (desktop only) ── */}
           <div
-            className="hidden w-[300px] shrink-0 flex-col items-end gap-8 xl:flex"
+            className="hidden w-[300px] shrink-0 flex-col items-end gap-8 lg:flex"
             style={fadeUp(60)}
           >
             {/* legal nav */}
@@ -476,12 +482,10 @@ const LandingPage: React.FC = () => {
               className="flex flex-col items-end gap-5"
               aria-label="Legal and policies"
             >
-              {(
-                ["Terms", "Privacy", "About", "Security", "Government"] as const
-              ).map((label) => (
+              {legalNavItems.map(({ to, label }) => (
                 <Link
-                  key={label}
-                  to={`/${label.toLowerCase()}`}
+                  key={to}
+                  to={to}
                   className="text-[20px] font-medium leading-snug text-white/35 transition-colors duration-200 hover:text-white/95"
                 >
                   {label}
@@ -503,54 +507,6 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* ── FOOTER (below xl only; desktop uses right rail) ── */}
-      <footer
-        className="relative z-10 flex w-full shrink-0 items-center justify-center gap-2 px-4 py-2.5 bg-transparent xl:hidden"
-        // style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-      >
-        <div className="flex w-full max-w-[1380px] flex-wrap items-center justify-between gap-2">
-          <p className="text-[11px] text-white/30">© 2026 DayFi Co.</p>
-          <div className="flex items-center gap-3 text-[11px] text-white/25">
-            <Link to="/terms" className="transition-colors hover:text-white/55">
-              Terms
-            </Link>
-            <Dot />
-            <Link
-              to="/privacy"
-              className="transition-colors hover:text-white/55"
-            >
-              Privacy
-            </Link>
-            <Dot />
-            <Link to="/about" className="transition-colors hover:text-white/55">
-              About
-            </Link>
-            <Dot />
-            <Link
-              to="/security"
-              className="transition-colors hover:text-white/55"
-            >
-              Security
-            </Link>
-            <Dot />
-            <Link
-              to="/government"
-              className="transition-colors hover:text-white/55"
-            >
-              Government
-            </Link>
-          </div>
-          <div className="flex items-center gap-0.5">
-            <SocialIcon href={socialLinks.instagram} label="Instagram">
-              <Instagram className="h-4 w-4" strokeWidth={1.6} aria-hidden />
-            </SocialIcon>
-            <SocialIcon href={socialLinks.twitter} label="Twitter / X">
-              <Twitter className="h-4 w-4" strokeWidth={1.6} aria-hidden />
-            </SocialIcon>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

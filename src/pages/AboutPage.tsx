@@ -84,7 +84,6 @@ const AboutPage: React.FC = () => (
         effectiveDateLine="Last updated: 11 May 2026"
       />
     }
-    shellClassName="bg-[#F3F6F3]"
   >
     <LavenderSectionCards sections={aboutSections} />
   </LegalDocsLayout>

@@ -1,4 +1,5 @@
 import React from "react";
+import { X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
 export const LEGAL_GENERAL_NAV = [
@@ -16,18 +17,10 @@ export type LegalDocsLayoutProps = {
   effectiveDate?: string;
   /** Replaces the default "General" + title block (e.g. marketing hero). */
   customHeader?: React.ReactNode;
-  /** Applied to the outer page wrapper — ignored in the dark shell but kept for API compat. */
+  /** Merged onto the outer page wrapper (e.g. `bg-white`). */
   shellClassName?: string;
   children: React.ReactNode;
 };
-
-const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  [
-    "font-body text-left text-[14px] leading-snug transition-colors duration-150",
-    isActive
-      ? "font-medium"
-      : "hover:opacity-100",
-  ].join(" ");
 
 export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
   title,
@@ -35,41 +28,20 @@ export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
   lastUpdated,
   effectiveDate,
   customHeader,
+  shellClassName = "",
   children,
 }) => (
   <div
-    className="min-h-screen"
-    style={{
-      background:
-        "linear-gradient(160deg, rgba(125,207,17,0.07) 0%, #0d2018 18%, #080f0a 50%, #050c07 100%)",
-      color: "rgba(255,255,255,0.88)",
-    }}
+    className={["min-h-screen bg-white text-black", shellClassName].filter(Boolean).join(" ")}
   >
-    {/* Subtle noise texture matching landing */}
-    <svg
-      className="pointer-events-none fixed inset-0 h-full w-full opacity-[0.025]"
-      aria-hidden
-      style={{ mixBlendMode: "screen", zIndex: 0 }}
-    >
-      <filter id="shell-noise">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.72"
-          numOctaves="4"
-          stitchTiles="stitch"
-        />
-        <feColorMatrix type="saturate" values="0" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#shell-noise)" />
-    </svg>
-
     <div className="relative z-10 mx-auto max-w-[1180px] px-5 pb-24 pt-8 sm:px-8 lg:px-12 lg:pt-12">
       {/* Top bar */}
-      <div
-        className="mb-10 flex items-center justify-between gap-4 pb-6"
-        style={{ borderBottom: "1px solid rgba(125,207,17,0.1)" }}
-      >
-        <Link to="/" className="inline-flex items-center gap-2" aria-label="DayFi home">
+      <div className="mb-10 flex items-center justify-between gap-4 pb-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 no-underline"
+          aria-label="DayFi home"
+        >
           <img
             src="/img/hero_logo.png"
             alt="DayFi"
@@ -80,16 +52,10 @@ export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
         </Link>
         <Link
           to="/"
-          className="font-body text-[13px] transition-colors duration-150"
-          style={{ color: "rgba(125,207,17,0.65)" }}
-          onMouseEnter={(e) =>
-            ((e.target as HTMLElement).style.color = "rgba(125,207,17,1)")
-          }
-          onMouseLeave={(e) =>
-            ((e.target as HTMLElement).style.color = "rgba(125,207,17,0.65)")
-          }
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-black/65 no-underline transition-colors hover:bg-black/[0.06] hover:text-black"
+          aria-label="Close"
         >
-          ← Home
+          <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
         </Link>
       </div>
 
@@ -103,33 +69,21 @@ export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
             </>
           ) : (
             <>
-              <p
-                className="font-body text-[11px] font-semibold uppercase tracking-[0.14em]"
-                style={{ color: "rgba(125,207,17,0.5)" }}
-              >
+              <p className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-black/50">
                 General
               </p>
               {title ? (
-                <h1
-                  className="mt-2 font-body text-[clamp(1.85rem,5vw,2.75rem)] font-light leading-[1.12] tracking-[-0.03em]"
-                  style={{ color: "rgba(255,255,255,0.92)" }}
-                >
+                <h1 className="mt-2 font-body text-[clamp(1.85rem,5vw,2.75rem)] font-light leading-[1.12] tracking-[-0.03em] text-black">
                   {title}
                 </h1>
               ) : null}
               {subtitle ? (
-                <p
-                  className="font-body mt-4 text-[16px] leading-relaxed sm:text-[17px]"
-                  style={{ color: "rgba(255,255,255,0.45)" }}
-                >
+                <p className="font-body mt-4 text-[16px] leading-relaxed text-black/70 sm:text-[17px]">
                   {subtitle}
                 </p>
               ) : null}
               {(lastUpdated || effectiveDate) && (
-                <div
-                  className="font-body mt-6 space-y-1 text-[13px]"
-                  style={{ color: "rgba(125,207,17,0.55)" }}
-                >
+                <div className="font-body mt-6 space-y-1 text-[13px] text-black/55">
                   {lastUpdated && (
                     <p>Last updated: {lastUpdated}</p>
                   )}
@@ -143,18 +97,14 @@ export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
           )}
         </main>
 
-        {/* Sidebar nav */}
+        {/* Sidebar nav: "General" stays at top; link list scrolls independently */}
         <aside className="shrink-0 lg:w-[220px] xl:w-[240px]">
-          <div className="lg:sticky lg:top-10">
-            <p
-              className="font-body text-[11px] font-semibold uppercase tracking-[0.14em]"
-              style={{ color: "rgba(125,207,17,0.4)" }}
-            >
+          <div className="flex flex-col lg:sticky lg:top-10 lg:max-h-[calc(100dvh-5rem)]">
+            <p className="shrink-0 font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-black/45">
               General
             </p>
             <nav
-              className="font-body mt-4 flex flex-col gap-3 pt-4"
-              style={{ borderTop: "1px solid rgba(125,207,17,0.12)" }}
+              className="font-body mt-4 flex flex-col gap-3 lg:min-h-0 lg:max-h-[min(22rem,calc(100dvh-8rem))] lg:flex-1 lg:overflow-y-auto lg:overscroll-y-contain lg:pr-1"
               aria-label="Legal documents"
             >
               {LEGAL_GENERAL_NAV.map((item) => (
@@ -164,27 +114,12 @@ export const LegalDocsLayout: React.FC<LegalDocsLayoutProps> = ({
                   end
                   className={({ isActive }) =>
                     [
-                      "font-body text-left text-[14px] leading-snug transition-colors duration-150",
+                      "block w-full text-left text-[14px] leading-snug no-underline transition-colors duration-150",
                       isActive
-                        ? "font-medium"
-                        : "",
+                        ? "font-medium text-black"
+                        : "text-black/40 hover:text-black/75",
                     ].join(" ")
                   }
-                  style={({ isActive }) => ({
-                    color: isActive
-                      ? "#7DCF11"
-                      : "rgba(255,255,255,0.35)",
-                  })}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    if (!el.classList.contains("font-medium"))
-                      el.style.color = "rgba(255,255,255,0.7)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    if (!el.classList.contains("font-medium"))
-                      el.style.color = "rgba(255,255,255,0.35)";
-                  }}
                 >
                   {item.label}
                 </NavLink>

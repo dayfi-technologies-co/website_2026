@@ -101,7 +101,6 @@ const GovernmentPage: React.FC = () => (
         effectiveDateLine="Effective date: 11 May 2026"
       />
     }
-    shellClassName="bg-[#F3F6F3]"
   >
     <LavenderSectionCards sections={governmentSections} />
   </LegalDocsLayout>

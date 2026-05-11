@@ -237,7 +237,7 @@ const LandingPage: React.FC = () => {
 
           <div className="flex flex-1 flex-col items-center justify-center pb-2 xl:items-start">
             <h1
-              className="max-w-[320px] text-center font-light leading-[1.05] tracking-[-0.038em] text-white/95 xl:text-left"
+              className="max-w-[320px] text-center font-normal leading-[1.05] tracking-[-0.038em] text-white/95 xl:text-left"
               style={{ fontSize: "clamp(38px, 10vw, 66px)" }}
             >
               One point of sale, wherever you grow
@@ -363,7 +363,7 @@ const LandingPage: React.FC = () => {
                 <div className="shrink-0" aria-hidden />
                 <div className="flex flex-1 flex-col items-center justify-center pb-2">
                   <h1
-                    className="max-w-[320px] text-center font-light leading-[1.05] tracking-[-0.038em] text-white/95"
+                    className="max-w-[320px] text-center font-normal leading-[1.05] tracking-[-0.038em] text-white/95"
                     style={{ fontSize: "clamp(38px, 10vw, 66px)" }}
                   >
                     One point of sale, wherever you grow

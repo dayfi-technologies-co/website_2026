@@ -84,7 +84,7 @@ const LandingPage: React.FC = () => {
               className="mx-auto h-44 w-44 object-contain"
             />
 
-            <p className="font-body mb-4 mt-2 w-full text-center text-[16px] leading-snug text-zap-ink md:text-[20px]">
+            <p className="font-body mb-4 w-full text-center text-[16px] leading-snug text-zap-ink md:text-[20px]">
               Every day is payday
             </p>
 

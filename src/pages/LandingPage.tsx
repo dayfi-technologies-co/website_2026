@@ -73,9 +73,9 @@ const LandingPage: React.FC = () => {
     <div
       id="main-content"
       tabIndex={-1}
-      className="relative min-h-screen overflow-y-auto bg-zap-bg text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
+      className="relative flex min-h-screen flex-col overflow-y-auto bg-zap-bg text-zap-ink outline-none xl:h-screen xl:overflow-hidden"
     >
-      <section className="flex min-h-full w-full items-center justify-center px-4 py-6 sm:px-6 md:px-10 xl:min-h-0 xl:px-20 xl:py-6">
+      <section className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 sm:px-6 md:px-10 xl:px-20 xl:py-6">
         <div className="flex w-full max-w-[1380px] flex-col items-center gap-6 xl:flex-row xl:items-center xl:justify-between xl:gap-6">
           <div className="hidden w-[320px] flex-col justify-center xl:flex">
             <img
@@ -87,9 +87,11 @@ const LandingPage: React.FC = () => {
             <p className="font-body mb-4 mt-2 w-full text-center text-[16px] leading-snug text-zap-ink md:text-[20px]">
               Every day is payday
             </p>
+
             <p className="font-body mt-4 w-full text-center text-[18px] leading-snug text-zap-ink-muted md:text-[22px]">
-              Built for Nigerian merchants who move fast. Sell in-person, online, or on the go.
+              Sell in-person, online, or<br />on the go.
             </p>
+
           </div>
 
           <div className="flex w-full flex-col items-center gap-4 pt-2 xl:hidden">
@@ -102,7 +104,7 @@ const LandingPage: React.FC = () => {
               Every day is payday
             </p>
             <p className="font-body w-full max-w-md text-center text-[16px] leading-snug text-zap-ink-muted sm:text-[17px] md:text-[19px]">
-              Built for Nigerian merchants who move fast. Sell in-person, online, or on the go.
+              Sell in-person, online, or<br />on the go.
             </p>
           </div>
 
@@ -146,7 +148,7 @@ const LandingPage: React.FC = () => {
           </Iphone17Pro>
 
           <div className="hidden w-[320px] flex-col items-center justify-center gap-4 xl:flex">
-            <div className="flex w-full flex-col items-center justify-center gap-3 pt-8">
+            <div className="flex w-full flex-col items-center justify-center gap-3 pt-4">
               <img
                 src={appStoreBadge}
                 alt="Coming soon to the App Store"
